@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .heading {
+            height: 50px;
+            width: 100%;
+            border-radius: 25px;
+        }
+        .container {
+            position: relative;
+            height: 620px;
+        }
+
+        .left {
+            position: absolute;
+            width: 49%;
+            height: 500px;
+            min-width: 400px;
+            background-color: #ffbafc;
+            border-radius: 25px;
+            display: block;
+        }
+
+        .right {
+            position: absolute;
+            width: 49%;
+            height: 500px;
+            left: 51%;
+            min-width: 400px;
+            background-color: #ffbafc;
+            border-radius: 25px;
+        }
+        .bottom {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            bottom: 0px;
+            background-color: #ffbafc;
+            border-radius: 25px;
+            font-size: 22px;
+        }
+        h1 {
+            text-align: center;
+            width: 100%;
+            background-color: #e9d876;
+            border-radius: 25px;
+        }
+
+        h2 {
+            background-color: #f8d2fc;
+            text-align: center;
+            width: 100%;
+            border-radius: 25px;
+        }
+        p.result {
+            text-align: center;
+        }
+
+        .bilde {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .ievVards {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 22px;
+        }
+
+        #answer {
+            margin: 0 auto;
+            width: 326px;
+            height: 38px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+            background-color: rgb(177, 177, 161);
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+    <script>
+        function allowDrop(ev) {
+           ev.preventDefault();
+        }
+        
+        function drag(ev) {
+           ev.dataTransfer.setData("text", ev.target.id);
+        }
+        
+        function drop(ev) {
+           ev.preventDefault();
+           var data = ev.dataTransfer.getData("text");
+           ev.target.appendChild(document.getElementById(data));
+        }
+
+        function check(event) {
+            const list = document.getElementById("answer");
+
+            var x = list.firstChild.src;
+            var y = document.getElementById("myPicture").src;
+            x = x.substring(0,x.length-4);
+            y = y.substring(0,y.length-5);
+
+            console.log(x);
+            console.log(y);
+
+            
+
+            if (x == y) {
+                //alert("PAREIZI!");
+                jautPareizi = jautPareizi + 1;
+                console.log(jautPareizi);
+                document.getElementById("result").innerHTML = "Statuss: Apsveicu!";
+                document.getElementById("summary").innerHTML = "Pareizas atbildes: "+jautPareizi+" / "+jautSkaits;
+            } else {
+                //alert("NEPAREIZI!");
+                document.getElementById("result").innerHTML = "Statuss: Kļūda :(";
+                document.getElementById("summary").innerHTML = "Pareizas atbildes: "+jautPareizi+" / "+jautSkaits;
+            }
+        
+            if (myPix.length > 0) {
+                list.removeChild(list.firstChild);
+                choosePic();
+            } else {
+                document.getElementById("summary").innerHTML = "Spēles beigas! Tavs rezultāts: "+jautPareizi+" / "+jautSkaits;
+            }
+           
+        }
+
+        window.onload = choosePic;
+
+        var myPix = new Array("images/igors1.png","images/bahs1.png","images/ludvigsv1.png","images/pauls1.png","images/mocarts1.png","images/strauss1.png","images/suberts1.png");
+        var jautSkaits = 7;
+        var jautPareizi = 0;
+
+        function choosePic() {
+            console.log(myPix);
+            var randomNum = Math.floor(Math.random() * myPix.length);
+            document.getElementById("myPicture").src = myPix[randomNum];
+
+            removeItemOnce(myPix, myPix[randomNum]);
+            console.log(myPix);
+        }
+
+        function removeItemOnce(arr, value) {
+            var index = arr.indexOf(value);
+            if (index > -1) {
+                arr.splice(index, 1);
+            }
+            return arr;
+        }
+        </script>
+       
+</head>
+
+<body style="background-color: rgb(252, 252, 154);;">
+    <div class="heading">
+        <H1>ATPAZĪSTI KOMPONISTUS</H1>
+    </div>
+    <div>
+        <h2>PIEVIENO DOTOS KOMPONISTU VĀRDUS PIE ATBILSTOŠAJIEM ATTĒLIEM!</h2>
+    </div>
+    <div class="container">
+        <div class="left">
+            <h2>Komponisti</h2>
+            <img id="drag1" src="images/bahs.PNG" draggable="true" ondragstart="drag(event)" > <br>
+            <img id="drag2" src="images/igors.PNG" draggable="true" ondragstart="drag(event)" > <br>
+            <img id="drag3" src="images/ludvigsv.PNG" draggable="true" ondragstart="drag(event)" > <br>
+            <img id="drag4" src="images/mocarts.PNG" draggable="true" ondragstart="drag(event)" > <br>
+            <img id="drag5" src="images/pauls.PNG" draggable="true" ondragstart="drag(event)" > <br>
+            <img id="drag6" src="images/strauss.PNG" draggable="true" ondragstart="drag(event)" > <br>
+            <img id="drag7" src="images/suberts.PNG" draggable="true" ondragstart="drag(event)" >
+        </div>
+        <div class="right">
+           
+            <div class="bilde"> <img src="images/roza.png" width="300" height="350" id="myPicture" alt="Portrets"></div>
+            <div class="ievVards"> <b> Ievelc atbilstošā komponista vārdu</b></div>
+            <div id="answer" ondrop="drop(event)" ondragover="allowDrop(event)" ondragend="check(event)"></div>
+        </div>
+        <div class="bottom">
+            <p id="result" class="result"><b>Statuss: Sākam jaunu spēli!</b></p>
+            <p id="summary" class="result"><b>Pareizas atbildes: 0 / 7</b></p>
+        </div>
+    </div>
+
+    
+    <br>
+    
+    
+</body>
+
+</html>
+
+  
+  
+ 
+  
+  
+  
+  
